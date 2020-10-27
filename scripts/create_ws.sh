@@ -3,6 +3,10 @@
 set -e
 set -o nounset
 set -o pipefail
+export http_proxy=http://proxy-chain.intel.com:911
+export https_proxy=http://proxy-chain.intel.com:911
+export ftp_proxy=http://proxy-chain.intel.com:911
+export socks_proxy=http://proxy-chain.intel.com:1080
 
 if [ $# -lt 3 ]
 then
@@ -40,8 +44,8 @@ then
 fi
 
 # ROS_DISTRO SPECIFIC
-curl -s https://raw.githubusercontent.com/ros2/ros2/foxy/ros2.repos |\
-    ros2 run micro_ros_setup yaml_filter.py ${PACKAGES} > ros2.repos
+curl --proxy http://proxy-chain.intel.com:911 -s https://raw.githubusercontent.com/ros2/ros2/foxy/ros2.repos | \
+	ros2 run micro_ros_setup yaml_filter.py ${PACKAGES} > ros2.repos
 vcs import --input ros2.repos
 vcs import --input $REPOS
 

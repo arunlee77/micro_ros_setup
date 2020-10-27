@@ -17,7 +17,6 @@ if [ $# -gt 0 ]; then
     fi
 fi
 export UROS_FAST_BUILD
-
 # Checking if firmware exists
 if [ -d $FW_TARGETDIR ]; then
     RTOS=$(head -n1 $FW_TARGETDIR/PLATFORM)

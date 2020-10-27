@@ -1,7 +1,7 @@
 repositories:
   NuttX:
     type: git
-    url: https://github.com/micro-ROS/NuttX.git
+    url: https://github.com/arunlee77/NuttX.git
     version: master
   apps:
     type: git

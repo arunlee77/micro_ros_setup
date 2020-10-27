@@ -3,6 +3,10 @@
 set -e
 set -o nounset
 set -o pipefail
+export http_proxy=http://proxy-chain.intel.com:911
+export https_proxy=https://proxy-chain.intel.com:911
+export ftp_proxy=http://proxy-chain.intel.com:911
+export socks_proxy=http://proxy-chain.intel.com:1080
 
 
 [ -d $FW_TARGETDIR ] || mkdir $FW_TARGETDIR

@@ -3,6 +3,10 @@
 set -e
 set -o nounset
 set -o pipefail
+export http_proxy=http://proxy-chain.intel.com:911
+export https_proxy=http://proxy-chain.intel.com:912
+export ftp_proxy=http://proxy-chain.intel.com:911
+export socks_proxy=http://proxy-chain.intel.com:1080
 
 DEV_WS_DIR=dev_ws
 FW_TARGETDIR=$(pwd)/firmware
@@ -48,7 +52,7 @@ fi
 # Checking if firmware exists
 if [ -d $FW_TARGETDIR ]; then
     echo "Firmware already created. Please delete $FW_TARGETDIR folder if you want a fresh installation."
-    exit 1
+#    exit 1
 fi
 
 # Checking folders
@@ -61,7 +65,7 @@ else
     exit 1 
 fi
 
-mkdir $FW_TARGETDIR
+mkdir -p $FW_TARGETDIR
 touch $FW_TARGETDIR/COLCON_IGNORE
 
 echo $RTOS > $FW_TARGETDIR/PLATFORM
@@ -83,7 +87,7 @@ fi
 
 pushd $FW_TARGETDIR >/dev/null
     # Creating dev directory
-    mkdir $DEV_WS_DIR
+    mkdir -p $DEV_WS_DIR
 
     if [ $RTOS != "host" ]; then
         ros2 run micro_ros_setup create_ws.sh $DEV_WS_DIR $PREFIX/config/$RTOS/dev_ros2_packages.txt \
@@ -91,7 +95,7 @@ pushd $FW_TARGETDIR >/dev/null
         rosdep install -y --from-paths $DEV_WS_DIR -i $DEV_WS_DIR --rosdistro foxy --skip-keys="$SKIP"
 
          # Creating mcu directory
-        mkdir mcu_ws
+        mkdir -p mcu_ws
         ros2 run micro_ros_setup create_ws.sh mcu_ws $PREFIX/config/client_ros2_packages.txt $PREFIX/config/$RTOS/$TARGET_FOLDER/client_uros_packages.repos
         cp $PREFIX/config/$RTOS/$TARGET_FOLDER/client-colcon.meta mcu_ws/colcon.meta
     fi
